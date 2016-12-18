@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:1.0.2.RELEASE"
+    }
+}
+
+subprojects {
+
+    group 'pl.jug.cdc'
+    version '1.0.0-SNAPSHOT'
+
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.springframework.boot:spring-boot-starter-web:1.4.2.RELEASE'
+        testCompile 'org.codehaus.groovy:groovy-all:2.4.6'
+        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+        testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
+    }
+}
+
+project(':client') {
+
+    dependencies {
+        testCompile 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:1.0.2.RELEASE'
+        testCompile 'org.assertj:assertj-core:3.6.1'
+    }
+
+    test.dependsOn(":server:publishToMavenLocal")
+}
+
+project(':server') {
+
+    apply plugin: 'maven-publish'
+    apply plugin: 'spring-cloud-contract'
+
+    sourceSets {
+        test {
+            groovy {
+                srcDir './build/generated-test-sources'
+            }
+        }
+    }
+
+    dependencies {
+        testCompile 'com.jayway.restassured:spring-mock-mvc:2.9.0'
+    }
+
+    contracts {
+        targetFramework = 'Spock'
+        contractsDslDir = file('./cdc-contracts')
+        generatedTestSourcesDir = file('./build/generated-test-sources')
+        baseClassForTests = 'pl.jug.cdc.server.ServerSpec'
+        basePackageForTests = 'pl.jug.cdc.server.contracts'
+    }
+}
+

@@ -1,4 +1,5 @@
 rootProject.name = 'consumer-driven-contracts'
-include 'server'
-include 'client'
+include 'user-service'
+include 'ui'
+include 'crm'
 

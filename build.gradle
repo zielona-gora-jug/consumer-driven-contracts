@@ -3,14 +3,14 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:1.0.2.RELEASE"
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:1.2.1.RELEASE"
     }
 }
 
 subprojects {
 
-    group 'pl.jug.cdc'
-    version '1.0.0-SNAPSHOT'
+    group 'pl.jerckov.cdc'
+    version '1.0.0'
 
     apply plugin: 'java'
     apply plugin: 'groovy'
@@ -19,27 +19,37 @@ subprojects {
 
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     dependencies {
-        compile 'org.springframework.boot:spring-boot-starter-web:1.4.2.RELEASE'
-        testCompile 'org.codehaus.groovy:groovy-all:2.4.6'
-        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
-        testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
+        compile 'org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE'
     }
 }
 
-project(':client') {
+project(':ui') {
 
     dependencies {
-        testCompile 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:1.0.2.RELEASE'
-        testCompile 'org.assertj:assertj-core:3.6.1'
+        testCompile 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:1.2.1.RELEASE'
+        testCompile 'org.assertj:assertj-core:3.8.0'
+        testCompile 'pl.jerckov.cdc:user-service:+:stubs'
     }
 
-    test.dependsOn(":server:publishToMavenLocal")
+    test.dependsOn(":user-service:publishToMavenLocal")
 }
 
-project(':server') {
+project(':crm') {
+
+    dependencies {
+        testCompile 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:1.2.1.RELEASE'
+        testCompile 'org.assertj:assertj-core:3.8.0'
+        testCompile 'pl.jerckov.cdc:user-service:+:stubs'
+    }
+
+    test.dependsOn(":user-service:publishToMavenLocal")
+}
+
+project(':user-service') {
 
     apply plugin: 'maven-publish'
     apply plugin: 'spring-cloud-contract'
@@ -53,7 +63,10 @@ project(':server') {
     }
 
     dependencies {
-        testCompile 'com.jayway.restassured:spring-mock-mvc:2.9.0'
+        testCompile 'org.codehaus.groovy:groovy-all:2.4.13'
+        testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+        testCompile 'org.spockframework:spock-spring:1.1-groovy-2.4'
+        testCompile 'org.springframework.cloud:spring-cloud-starter-contract-verifier:1.2.1.RELEASE'
     }
 
     contracts {

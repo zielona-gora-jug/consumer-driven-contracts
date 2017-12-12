@@ -18,7 +18,7 @@ class UserServiceRestClient {
         this.userServiceUrl = userServiceUrl;
     }
 
-    ResponseEntity<UserResponse> createNewUser(final String name) {
+    ResponseEntity<UserResponse> postUser(final String name) {
         return this.restTemplate.exchange(
                 RequestEntity
                         .post(URI.create(userServiceUrl.toString() + "/users"))

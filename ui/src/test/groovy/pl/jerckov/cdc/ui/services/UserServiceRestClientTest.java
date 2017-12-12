@@ -21,11 +21,11 @@ public class UserServiceRestClientTest {
     }
 
     @Test
-    public void shouldCreateNewUser() {
+    public void shouldPostUser() {
         //given
 
         //when
-        final ResponseEntity<UserResponse> result = USER_SERVICE.createNewUser("Jan");
+        final ResponseEntity<UserResponse> result = USER_SERVICE.postUser("Jan");
 
         //then
         assertThat(result.getStatusCodeValue()).isEqualTo(201);

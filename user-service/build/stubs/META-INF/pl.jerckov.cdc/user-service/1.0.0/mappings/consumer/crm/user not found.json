@@ -1,0 +1,12 @@
+{
+  "id" : "23d4065d-f049-4575-b8c4-29c8adc31223",
+  "request" : {
+    "urlPath" : "/users/456",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 404,
+    "transformers" : [ "response-template" ]
+  },
+  "uuid" : "23d4065d-f049-4575-b8c4-29c8adc31223"
+}

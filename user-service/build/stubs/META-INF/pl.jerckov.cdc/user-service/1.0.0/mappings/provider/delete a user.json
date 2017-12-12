@@ -1,0 +1,20 @@
+{
+  "id" : "f6a328ca-cd3a-41de-a16a-33c369fc3ef9",
+  "request" : {
+    "urlPath" : "/users/123",
+    "method" : "DELETE",
+    "headers" : {
+      "Content-Type" : {
+        "equalTo" : "application/json"
+      }
+    }
+  },
+  "response" : {
+    "status" : 204,
+    "headers" : {
+      "Content-Type" : "application/json"
+    },
+    "transformers" : [ "response-template" ]
+  },
+  "uuid" : "f6a328ca-cd3a-41de-a16a-33c369fc3ef9"
+}

@@ -1,4 +1,8 @@
-
+/.gradle
 /.idea/
-/client/build/
-/server/build/
+/crm/build/
+/ui/build/
+/user-service/build/
+/crm/out/
+/ui/out/
+/user-service/out/
